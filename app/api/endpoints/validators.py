@@ -8,7 +8,7 @@ async def check_name_duplicates(
         meeting_room_name: str,
         session: AsyncSession,
 ) -> None:
-    room_id = await charity_project_crud.get_room_id_by_name(
+    room_id = await charity_project_crud.get_id_by_name(
         meeting_room_name,
         session,
     )
