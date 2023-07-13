@@ -4,6 +4,7 @@ from app.core.db import Base
 
 
 class CharityBase(Base):
+    __abstract__ = True
     full_amount = Column(Integer, default=0)
     invested_amount = Column(Integer, default=0)
     create_date = Column(DateTime)
