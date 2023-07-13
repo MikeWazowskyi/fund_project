@@ -10,7 +10,7 @@ CLOSE_DATE = (datetime.now() + timedelta(days=30)).isoformat(
 
 
 class CharityBase(BaseModel):
-    full_amount: Optional[int] = Field(..., gt=0)
-    invested_amount: Optional[int] = Field(..., gt=0)
-    create_date: Optional[datetime] = Field(..., example=CREATE_DATE)
-    close_date: Optional[datetime] = Field(..., example=CREATE_DATE)
+    full_amount: Optional[int] = Field(None, ge=0)
+    invested_amount: Optional[int] = Field(None, ge=0)
+    create_date: Optional[datetime] = Field(None, example=CREATE_DATE)
+    close_date: Optional[datetime] = Field(None, example=CREATE_DATE)
