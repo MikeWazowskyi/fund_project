@@ -6,4 +6,3 @@ from app.models.base import CharityBase
 class Donation(CharityBase):
     user_id = Column(Integer, ForeignKey('user.id'))
     comment = Column(Text)
-    fully_invested = Column(Boolean, default=False)
