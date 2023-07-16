@@ -10,7 +10,10 @@ CLOSE_DATE = (datetime.now() + timedelta(days=30)).isoformat(
 
 
 class CharityBase(BaseModel):
+    """Base pydantic schema"""
+
     full_amount: Optional[int] = Field(None, ge=0)
+    fully_invested: Optional[bool]
     invested_amount: Optional[int] = Field(None, ge=0)
     create_date: Optional[datetime] = Field(None, example=CREATE_DATE)
     close_date: Optional[datetime] = Field(None, example=CREATE_DATE)
