@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import User
@@ -75,3 +75,14 @@ class CRUDBase:
         await session.delete(db_obj)
         await session.commit()
         return db_obj
+
+    async def get_not_invested(
+            self,
+            session: AsyncSession,
+    ):
+        not_invested_objs = await session.execute(
+            select(self.model).where(
+                self.model.fully_invested == 0
+            ).order_by(self.model.create_date)
+        )
+        return not_invested_objs.scalars().all()
