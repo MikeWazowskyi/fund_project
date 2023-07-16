@@ -1,14 +1,15 @@
-from typing import List, Optional
+from typing import List
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase
-from app.models import Donation, User
-from app.schemas.donation import DonationDB, DonationCreate
+from app.models import Donation
+from app.schemas.donation import DonationDB
 
 
 class CRUDDonation(CRUDBase):
+    """CRUD class of donation sqlalchemy model"""
 
     async def get_by_user(
             self,
