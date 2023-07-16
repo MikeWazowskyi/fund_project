@@ -47,7 +47,7 @@ async def create_new_donation(
     response_model_exclude_none=True,
     tags=[Tag.UNAUTHORIZED, Tag.RETRIEVE],
 )
-async def get_my_donations(
+async def get_all_donations(
         session: AsyncSession = Depends(get_async_session),
 ):
     """Get all donations"""
