@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.crud.base import CRUDBase
 from app.models.base import CharityBase
 
@@ -10,6 +11,8 @@ async def invest(
         crud_object: CRUDBase,
         session: AsyncSession,
 ):
+    """Coroutine to perform investing logic"""
+
     not_invested_objs = await crud_object.get_not_invested(
         session
     )
