@@ -1,17 +1,15 @@
-from datetime import datetime
 from typing import Optional
 
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase
 from app.models import CharityProject
-from app.schemas.charity_project import CharityProjectCreate, \
-    CharityProjectUpdate
 
 
 class CRUDCharityProject(CRUDBase):
+    """CRUD class of charity project sqlalchemy model"""
+
     async def get_id_by_name(
             self,
             project_name: str,
