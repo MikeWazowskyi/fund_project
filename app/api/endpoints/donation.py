@@ -45,7 +45,7 @@ async def create_new_donation(
     '/',
     response_model=List[DonationDB],
     response_model_exclude_none=True,
-    tags=[Tag.RETRIEVE],
+    tags=[Tag.UNAUTHORIZED, Tag.RETRIEVE],
 )
 async def get_my_donations(
         session: AsyncSession = Depends(get_async_session),
