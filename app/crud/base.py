@@ -2,13 +2,15 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select, desc
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import User
 
 
 class CRUDBase:
+    """Base class with CRUD operations"""
+
     def __init__(self, model):
         self.model = model
 
