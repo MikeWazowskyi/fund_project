@@ -6,20 +6,33 @@ from app.schemas.base import CharityBase
 
 
 class DonationBase(CharityBase):
+    """Base donation pydantic schema"""
+
     comment: Optional[str]
 
 
-class DonationDB(CharityBase):
+class DonationCreate(DonationBase):
+    """Create donation pydantic schema"""
+
+    full_amount: int = Field(..., gt=0)
+
+
+class MyDonationDB(DonationCreate):
+    """Read from DB donation pydantic schema attached to logged-in user"""
+
     id: int
-    user_id: Optional[int]
 
     class Config:
         orm_mode = True
 
 
-class DonationCreate(DonationBase):
-    full_amount: int = Field(..., gt=0)
+class DonationDB(MyDonationDB):
+    """Read from DB donation pydantic schema"""
+
+    user_id: int
 
 
 class DonationUpdate(DonationBase):
+    """Update donation pydantic schema"""
+
     pass
