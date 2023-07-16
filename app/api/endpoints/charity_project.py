@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable, Awaitable
 
 from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,6 +18,21 @@ from app.services.invest import invest
 router = APIRouter()
 
 
+async def set_common_docstring(function: Callable[..., Awaitable[None]]):
+    common_params = """
+    - **full_amount**: funds needed to implement the project
+    - **fully_invested**: investment status (generates automatically)
+    - **invested_amount**: invested funds (generates automatically)
+    - **create_date**: start date of project (generates automatically)
+    - **close_date**: date when project was invested
+    (generates automatically)
+    - **name**: name of a project
+    - **description**: description of a project
+    """
+    function.__doc__ += common_params
+    return function
+
+
 @router.post(
     '/',
     response_model=CharityProjectDB,
@@ -25,6 +40,7 @@ router = APIRouter()
     dependencies=[Depends(current_superuser)],
     tags=[Tag.SUPERUSERS, Tag.CREATE]
 )
+@set_common_docstring
 async def create_new_charity_project(
         charity_project: CharityProjectCreate = Body(
             ...,
@@ -48,6 +64,7 @@ async def create_new_charity_project(
     response_model_exclude_none=True,
     tags=[Tag.RETRIEVE],
 )
+@set_common_docstring
 async def get_all_charity_projects(
         session: AsyncSession = Depends(get_async_session),
 ):
@@ -63,6 +80,7 @@ async def get_all_charity_projects(
     dependencies=[Depends(current_superuser)],
     tags=[Tag.SUPERUSERS, Tag.REMOVE],
 )
+@set_common_docstring
 async def remove_charity_project(
         charity_project_id: int,
         session: AsyncSession = Depends(get_async_session),
@@ -87,6 +105,7 @@ async def remove_charity_project(
     dependencies=[Depends(current_superuser)],
     tags=[Tag.SUPERUSERS, Tag.UPDATE],
 )
+@set_common_docstring
 async def partially_update_charity_project(
         charity_project_id: int,
         charity_project_data: CharityProjectUpdate,
