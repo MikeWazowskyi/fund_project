@@ -1,6 +1,6 @@
 from typing import List, Callable, Awaitable
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.endpoints.tags import Tag
@@ -43,7 +43,10 @@ def set_common_docstring(function: Callable[..., Awaitable[None]]):
 )
 @set_common_docstring
 async def create_new_donation(
-        donation: DonationCreate,
+        donation: DonationCreate = Body(
+            ...,
+            examples=DonationCreate.Config.schema_extra['examples'],
+        ),
         user: User = Depends(current_user),
         session: AsyncSession = Depends(get_async_session),
 ):
