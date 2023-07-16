@@ -18,7 +18,7 @@ from app.services.invest import invest
 router = APIRouter()
 
 
-async def set_common_docstring(function: Callable[..., Awaitable[None]]):
+def set_common_docstring(function: Callable[..., Awaitable[None]]):
     common_params = """
     - **full_amount**: funds needed to implement the project
     - **fully_invested**: investment status (generates automatically)
