@@ -5,10 +5,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase
 from app.models import Donation
-from app.schemas.donation import DonationDB
+from app.schemas.donation import DonationDB, DonationCreate, DonationUpdate
 
 
-class CRUDDonation(CRUDBase):
+class CRUDDonation(
+    CRUDBase[
+        Donation,
+        DonationCreate,
+        DonationUpdate,
+    ]
+):
     """CRUD class of donation sqlalchemy model"""
 
     async def get_by_user(
