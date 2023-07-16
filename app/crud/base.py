@@ -1,24 +1,33 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, TypeVar, Type, List, Generic
 
 from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.db import Base
 from app.models import User
 
+ModelType = TypeVar('ModelType', bound=Base)
+CreateSchemaType = TypeVar('CreateSchemaType', bound=BaseModel)
+UpdateSchemaType = TypeVar('UpdateSchemaType', bound=BaseModel)
 
-class CRUDBase:
+
+class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     """Base class with CRUD operations"""
 
-    def __init__(self, model):
+    def __init__(
+            self,
+            model: Type[ModelType],
+    ) -> None:
         self.model = model
 
     async def get(
             self,
             obj_id: int,
             session: AsyncSession,
-    ):
+    ) -> Optional[ModelType]:
         db_object = await session.execute(
             select(
                 self.model,
@@ -31,7 +40,7 @@ class CRUDBase:
     async def get_multi(
             self,
             session: AsyncSession,
-    ):
+    ) -> List[ModelType]:
         db_objs = await session.execute(
             select(self.model),
         )
@@ -39,10 +48,10 @@ class CRUDBase:
 
     async def create(
             self,
-            obj_in,
+            obj_in: CreateSchemaType,
             session: AsyncSession,
             user: Optional[User] = None,
-    ):
+    ) -> ModelType:
         obj_in_data = obj_in.dict()
         obj_in_data['create_date'] = datetime.now()
         if user is not None:
@@ -55,10 +64,10 @@ class CRUDBase:
 
     async def update(
             self,
-            db_obj,
-            obj_in,
+            db_obj: ModelType,
+            obj_in: UpdateSchemaType,
             session: AsyncSession,
-    ):
+    ) -> ModelType:
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
         for field in obj_data:
@@ -71,9 +80,9 @@ class CRUDBase:
 
     async def remove(
             self,
-            db_obj,
+            db_obj: ModelType,
             session: AsyncSession,
-    ):
+    ) -> ModelType:
         await session.delete(db_obj)
         await session.commit()
         return db_obj
@@ -81,7 +90,7 @@ class CRUDBase:
     async def get_not_invested(
             self,
             session: AsyncSession,
-    ):
+    ) -> List[ModelType]:
         not_invested_objs = await session.execute(
             select(self.model).where(
                 self.model.fully_invested == 0
