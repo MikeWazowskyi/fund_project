@@ -16,6 +16,28 @@ class DonationCreate(DonationBase):
 
     full_amount: int = Field(..., gt=0)
 
+    class Config:
+        schema_extra = {
+            'examples': {
+                'valid_request': {
+                    'summary': 'Correct data to create project',
+                    'description': 'Одиночная фамилия передается строкой',
+                    'value': {
+                        'comment': 'Happy to help!',
+                        'full_amount': 1000,
+                    }
+                },
+                'invalid_full_amount': {
+                    'summary': 'Invalid full amount',
+                    'description': 'Full amount must be grater then 0',
+                    'value': {
+                        'comment': 'Happy to help!',
+                        'full_amount': 0,
+                    }
+                },
+            }
+        }
+
 
 class MyDonationDB(DonationCreate):
     """Read from DB donation pydantic schema attached to logged-in user"""
