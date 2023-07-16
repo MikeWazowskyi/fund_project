@@ -94,3 +94,13 @@ async def check_charity_project_before_edit(
             charity_project_data,
             charity_project,
         )
+
+
+async def check_charity_project_before_delete(
+        charity_project: CharityProject,
+):
+    if charity_project.invested_amount > 0:
+        raise HTTPException(
+            status_code=400,
+            detail='В проект были внесены средства, не подлежит удалению!',
+        )
