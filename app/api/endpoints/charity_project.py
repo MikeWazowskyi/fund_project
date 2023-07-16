@@ -1,9 +1,10 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.endpoints import validators
+from app.api.endpoints.tags import Tag
 from app.api.endpoints.validators import check_charity_project_before_edit
 from app.core.db import get_async_session
 from app.core.user import current_superuser
@@ -22,9 +23,13 @@ router = APIRouter()
     response_model=CharityProjectDB,
     response_model_exclude_none=True,
     dependencies=[Depends(current_superuser)],
+    tags=[Tag.SUPERUSERS, Tag.CREATE]
 )
 async def create_new_charity_project(
-        charity_project: CharityProjectCreate,
+        charity_project: CharityProjectCreate = Body(
+            ...,
+            examples=CharityProjectCreate.Config.schema_extra['examples']
+        ),
         session: AsyncSession = Depends(get_async_session),
 ):
     """Create new charity project by only superusers"""
@@ -41,6 +46,7 @@ async def create_new_charity_project(
     '/',
     response_model=List[CharityProjectDB],
     response_model_exclude_none=True,
+    tags=[Tag.RETRIEVE],
 )
 async def get_all_charity_projects(
         session: AsyncSession = Depends(get_async_session),
@@ -55,6 +61,7 @@ async def get_all_charity_projects(
     '/{charity_project_id}',
     response_model=CharityProjectDB,
     dependencies=[Depends(current_superuser)],
+    tags=[Tag.SUPERUSERS, Tag.REMOVE],
 )
 async def remove_charity_project(
         charity_project_id: int,
@@ -78,6 +85,7 @@ async def remove_charity_project(
     '/{charity_project_id}',
     response_model=CharityProjectDB,
     dependencies=[Depends(current_superuser)],
+    tags=[Tag.SUPERUSERS, Tag.UPDATE],
 )
 async def partially_update_charity_project(
         charity_project_id: int,

@@ -3,6 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.endpoints.tags import Tag
 from app.core.db import get_async_session
 from app.core.user import current_user
 from app.crud.charity_project import charity_project_crud
@@ -18,7 +19,12 @@ router = APIRouter()
     '/',
     response_model=DonationDB,
     response_model_exclude_none=True,
-    response_model_exclude={'user_id', 'invested_amount', 'fully_invested'}
+    response_model_exclude={
+        'user_id',
+        'invested_amount',
+        'fully_invested',
+    },
+    tags=[Tag.COMMON_USERS, Tag.CREATE]
 )
 async def create_new_donation(
         donation: DonationCreate,
@@ -39,6 +45,7 @@ async def create_new_donation(
     '/',
     response_model=List[DonationDB],
     response_model_exclude_none=True,
+    tags=[Tag.RETRIEVE],
 )
 async def get_my_donations(
         session: AsyncSession = Depends(get_async_session),
@@ -53,6 +60,7 @@ async def get_my_donations(
     response_model=List[MyDonationDB],
     response_model_exclude_none=True,
     response_model_exclude={'invested_amount', 'fully_invested'},
+    tags=[Tag.COMMON_USERS, Tag.RETRIEVE],
 )
 async def get_my_donations(
         user: User = Depends(current_user),
