@@ -1,11 +1,13 @@
-from sqlalchemy import Integer, Column
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import declarative_base, sessionmaker, declared_attr
+from sqlalchemy import Column, Integer
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, declared_attr, sessionmaker
 
 from app.core.config import settings
 
 
 class PreBase:
+    """Base sqlalchemy model class """
+
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
@@ -19,5 +21,6 @@ AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession)
 
 
 async def get_async_session():
+    """Async session generator"""
     async with AsyncSessionLocal() as async_session:
         yield async_session
