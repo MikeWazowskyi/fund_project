@@ -1,12 +1,15 @@
 from sqlalchemy import Column, String, Text
+
 from .base import CharityBase
 
 
 class CharityProject(CharityBase):
+    """Charity project sqlalchemy model"""
+
     name = Column(String(100), unique=True)
     description = Column(Text)
 
     def __repr__(self):
-        return (f'<Name: {self.name}, '
+        return (f'<name: {self.name}, '
                 f'created: {self.create_date},'
-                f'invested: {self.fully_invested}>')
+                f'full_amount: {self.full_amount}>')
