@@ -62,7 +62,7 @@ async def create_new_charity_project(
     '/',
     response_model=List[CharityProjectDB],
     response_model_exclude_none=True,
-    tags=[Tag.RETRIEVE],
+    tags=[Tag.UNAUTHORIZED, Tag.RETRIEVE],
 )
 @set_common_docstring
 async def get_all_charity_projects(
