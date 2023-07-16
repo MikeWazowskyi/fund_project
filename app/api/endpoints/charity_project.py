@@ -9,8 +9,9 @@ from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud.charity_project import charity_project_crud
 from app.crud.donation import donation_crud
-from app.schemas.charity_project import CharityProjectDB, \
-    CharityProjectCreate, CharityProjectUpdate
+from app.schemas.charity_project import (CharityProjectCreate,
+                                         CharityProjectDB,
+                                         CharityProjectUpdate)
 from app.services.invest import invest
 
 router = APIRouter()
@@ -26,7 +27,7 @@ async def create_new_charity_project(
         charity_project: CharityProjectCreate,
         session: AsyncSession = Depends(get_async_session),
 ):
-    """Create new CharityProject model instance by only superusers"""
+    """Create new charity project by only superusers"""
     await validators.check_name_duplicates(charity_project.name, session)
     new_charity_project = await charity_project_crud.create(
         charity_project,
@@ -44,6 +45,8 @@ async def create_new_charity_project(
 async def get_all_charity_projects(
         session: AsyncSession = Depends(get_async_session),
 ):
+    """Get all charity projects"""
+
     charity_projects = await charity_project_crud.get_multi(session)
     return charity_projects
 
@@ -57,6 +60,8 @@ async def remove_charity_project(
         charity_project_id: int,
         session: AsyncSession = Depends(get_async_session),
 ):
+    """Remove charity project by only superusers"""
+
     charity_project = await validators.check_charity_project_exists(
         charity_project_id,
         session
@@ -79,6 +84,8 @@ async def partially_update_charity_project(
         charity_project_data: CharityProjectUpdate,
         session: AsyncSession = Depends(get_async_session),
 ):
+    """Update charity project by only superusers"""
+
     allowed_fields = {'name', 'description', 'full_amount'}
     charity_project = await validators.check_charity_project_exists(
         charity_project_id,
