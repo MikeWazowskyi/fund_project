@@ -7,5 +7,6 @@ class Tag(str, Enum):
     SUPERUSERS: str = 'Superusers'
     REMOVE: str = 'Remove'
     RETRIEVE: str = 'Retrieve'
+    UNAUTHORIZED: str = 'Unauthorized'
     UPDATE: str = 'Update'
 
