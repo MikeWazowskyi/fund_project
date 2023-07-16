@@ -1,11 +1,13 @@
 from typing import Optional
 
-from pydantic import Field, validator, BaseModel
+from pydantic import Field, validator
 
 from .base import CharityBase
 
 
 class CharityProjectBase(CharityBase):
+    """Base charity project pydantic schema"""
+
     name: Optional[str] = Field(
         None,
         min_length=1,
@@ -13,18 +15,19 @@ class CharityProjectBase(CharityBase):
         title='Project name'
     )
     description: Optional[str]
-    fully_invested: Optional[bool]
 
 
 class CharityProjectDB(CharityProjectBase):
+    """Read from DB charity project pydantic schema"""
+
     id: int
-    fully_invested: bool
 
     class Config:
         orm_mode = True
 
 
 class CharityProjectUpdate(CharityProjectBase):
+    """Update charity project pydantic schema"""
 
     @validator('description')
     def check_description_is_not_empty(cls, value: str):
@@ -34,6 +37,8 @@ class CharityProjectUpdate(CharityProjectBase):
 
 
 class CharityProjectCreate(CharityProjectUpdate):
+    """Create charity project pydantic schema"""
+
     name: str = Field(
         ...,
         min_length=1,
