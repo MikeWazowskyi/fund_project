@@ -1,6 +1,6 @@
-from typing import List, Optional
+from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.endpoints import validators
@@ -8,8 +8,10 @@ from app.api.endpoints.validators import check_charity_project_before_edit
 from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud.charity_project import charity_project_crud
+from app.crud.donation import donation_crud
 from app.schemas.charity_project import CharityProjectDB, \
     CharityProjectCreate, CharityProjectUpdate
+from app.services.invest import invest
 
 router = APIRouter()
 
@@ -30,6 +32,7 @@ async def create_new_charity_project(
         charity_project,
         session,
     )
+    await invest(new_charity_project, donation_crud, session)
     return new_charity_project
 
 
@@ -58,6 +61,7 @@ async def remove_charity_project(
         charity_project_id,
         session
     )
+    await validators.check_charity_project_before_delete(charity_project)
     charity_project = await charity_project_crud.remove(
         charity_project,
         session
@@ -68,7 +72,7 @@ async def remove_charity_project(
 @router.patch(
     '/{charity_project_id}',
     response_model=CharityProjectDB,
-    # dependencies=[Depends(current_superuser)],
+    dependencies=[Depends(current_superuser)],
 )
 async def partially_update_charity_project(
         charity_project_id: int,
