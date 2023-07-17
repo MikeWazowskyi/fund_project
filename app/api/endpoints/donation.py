@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import Awaitable, Callable, List
 
 from fastapi import APIRouter, Body, Depends, HTTPException
@@ -67,7 +68,7 @@ async def create_new_donation(
     except Exception:
         await session.rollback()
         raise HTTPException(
-            status_code=422,
+            status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
             detail='Error accrued during creation'
         )
     else:
@@ -87,8 +88,7 @@ async def get_all_donations(
         session: AsyncSession = Depends(get_async_session),
 ):
     """Get all donations"""
-    donations = await donation_crud.get_multi(session)
-    return donations
+    return await donation_crud.get_multi(session)
 
 
 @router.get(
@@ -104,5 +104,4 @@ async def get_my_donations(
         session: AsyncSession = Depends(get_async_session),
 ):
     """Return all donations made by logged-in user"""
-    donations = await donation_crud.get_by_user(user.id, session)
-    return donations
+    return await donation_crud.get_by_user(user.id, session)
