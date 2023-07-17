@@ -1,1 +1,75 @@
-Generic single-database configuration with an async dbapi.
+Alembic Database Migrations
+This project uses Alembic for database migrations.
+To apply database migrations or create new ones, follow these steps:
+
+1)Ensure that the virtual environment is activated.
+
+2)Generate a new migration script based on the changes you made to the models:
+    alembic revision --autogenerate -m "Your migration message"
+
+3)Apply the database migrations:
+    alembic upgrade head
+
+Base commands:
+
+* alembic init
+
+    Initializes a new Alembic migration environment in the current directory.
+    This command creates a alembic.ini configuration file and a alembic directory
+    with version and migration scripts.
+
+* alembic revision --autogenerate -m "message"
+
+    Generates a new migration script automatically based on the changes
+    detected in the models or database schema. The migration script is
+    created in the alembic/versions directory with a unique identifier.
+    Provide a meaningful message to describe the changes made.
+
+* alembic upgrade head
+
+    Applies all available migrations to the latest version. This command
+    runs all migration scripts that haven't been applied yet, bringing
+    the database schema up to date with the latest version defined in
+    the migration scripts.
+
+* alembic upgrade <revision>
+
+    Applies a specific migration identified by its revision ID.
+    Use this command to upgrade the database to a specific
+    migration version.
+
+* alembic downgrade <revision>
+
+    Rolls back the most recent migration or a specific migration identified
+    by its revision ID. This command reverts the database schema to the
+    state before applying the specified migration.
+
+* alembic current
+
+    Shows the current revision and the latest revision of the database.
+    This command displays the current migration version of the database and
+    the latest migration version available in the migration scripts.
+
+* alembic history
+
+    Displays a list of applied migrations along with their revision
+    IDs and messages. This command provides an overview of the migration
+    history of the database.
+
+* alembic show <revision>
+
+    Shows the details of a specific migration identified by its revision
+    ID. This command displays information about the specified migration,
+    including the revision ID, the author, the timestamp, and the migration
+    script.
+
+* alembic stamp <revision>
+
+    Manually sets the current database revision without running any
+    migration scripts. Use this command to mark a specific migration as
+    applied without actually executing it.
+
+These are just a few of the commonly used Alembic commands.
+The specific commands and their usage may vary depending on your project's
+configuration and requirements. For more detailed information, refer to the
+official Alembic documentation: https://alembic.sqlalchemy.org
