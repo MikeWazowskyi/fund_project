@@ -27,8 +27,7 @@ class CRUDDonation(
                 self.model.user_id == user_id
             )
         )
-        donations = donations.scalars().all()
-        return donations
+        return donations.scalars().all()
 
 
 donation_crud = CRUDDonation(Donation)
