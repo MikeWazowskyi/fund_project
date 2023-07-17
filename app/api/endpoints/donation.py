@@ -1,6 +1,6 @@
 from typing import Awaitable, Callable, List
 
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.endpoints.tags import Tag
@@ -51,25 +51,29 @@ async def create_new_donation(
         session: AsyncSession = Depends(get_async_session),
 ):
     """Create new donation by only registered users"""
-    new_donation = await donation_crud.create(
-        donation,
-        session,
-        user=user,
-    )
-    available_projects = await charity_project_crud.get_not_invested(
-        session
-    )
     try:
+        new_donation = await donation_crud.create(
+            donation,
+            session,
+            user=user,
+        )
+        available_projects = await charity_project_crud.get_not_invested(
+            session
+        )
         invested_charity_project, invested_donations = invest(
             new_donation,
             available_projects
         )
     except Exception:
         await session.rollback()
+        raise HTTPException(
+            status_code=422,
+            detail='Error accrued during creation'
+        )
     else:
         await session.commit()
         await session.refresh(invested_charity_project)
-    return new_donation
+        return new_donation
 
 
 @router.get(
