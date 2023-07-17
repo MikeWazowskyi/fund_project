@@ -12,5 +12,8 @@ call venv\Scripts\activate.bat
 REM Install all dependencies
 call python -m pip install --no-cache-dir -r requirements.txt
 
+REM Init database
+call alembic upgrade head
+
 REM Run the FastAPI application using uvicorn
-uvicorn app.main:app --host 0.0.0.0 --port 80
+uvicorn app.main:app --host localhost --port 80
