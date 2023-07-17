@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase
 from app.models import Donation
-from app.schemas.donation import DonationDB, DonationCreate, DonationUpdate
+from app.schemas.donation import DonationCreate, DonationDB, DonationUpdate
 
 
 class CRUDDonation(

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, TypeVar, Type, List, Generic
+from typing import Generic, List, Optional, Type, TypeVar
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel

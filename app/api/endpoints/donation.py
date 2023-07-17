@@ -1,6 +1,6 @@
-from typing import List, Callable, Awaitable
+from typing import Awaitable, Callable, List
 
-from fastapi import APIRouter, Depends, Body
+from fastapi import APIRouter, Body, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.endpoints.tags import Tag
