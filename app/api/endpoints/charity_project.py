@@ -54,7 +54,17 @@ async def create_new_charity_project(
         charity_project,
         session,
     )
-    await invest(new_charity_project, donation_crud, session)
+    available_donations = await donation_crud.get_not_invested(session)
+    try:
+        invested_charity_project, invested_donations = invest(
+            new_charity_project,
+            available_donations
+        )
+    except Exception:
+        await session.rollback()
+    else:
+        await session.commit()
+        await session.refresh(invested_charity_project)
     return new_charity_project
 
 
