@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import Awaitable, Callable, List
 
 from fastapi import APIRouter, Body, Depends, HTTPException
@@ -63,7 +64,7 @@ async def create_new_charity_project(
     except Exception:
         await session.rollback()
         raise HTTPException(
-            status_code=422,
+            status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
             detail='Error accrued during creation'
         )
     else:
@@ -83,9 +84,7 @@ async def get_all_charity_projects(
         session: AsyncSession = Depends(get_async_session),
 ):
     """Get all charity projects"""
-
-    charity_projects = await charity_project_crud.get_multi(session)
-    return charity_projects
+    return await charity_project_crud.get_multi(session)
 
 
 @router.delete(
@@ -106,11 +105,7 @@ async def remove_charity_project(
         session
     )
     await validators.check_charity_project_before_delete(charity_project)
-    charity_project = await charity_project_crud.remove(
-        charity_project,
-        session
-    )
-    return charity_project
+    return await charity_project_crud.remove(charity_project, session)
 
 
 @router.patch(
@@ -140,9 +135,6 @@ async def partially_update_charity_project(
         allowed_to_edit_fields=allowed_fields,
     )
 
-    charity_project = await charity_project_crud.update(
-        charity_project,
-        charity_project_data,
-        session,
-    )
-    return charity_project
+    return await charity_project_crud.update(charity_project,
+                                             charity_project_data,
+                                             session)
