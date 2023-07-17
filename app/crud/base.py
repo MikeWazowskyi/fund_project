@@ -53,7 +53,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             user: Optional[User] = None,
     ) -> ModelType:
         obj_in_data = obj_in.dict()
-        obj_in_data['create_date'] = datetime.now()
         if user is not None:
             obj_in_data['user_id'] = user.id
         db_obj = self.model(**obj_in_data)
