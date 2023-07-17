@@ -4,6 +4,9 @@ from pydantic import Field
 
 from app.schemas.base import CharityBase
 
+VALID_FULL_AMOUNT_EXAMPLE = 1000
+INVALID_FULL_AMOUNT_EXAMPLE = 0
+
 
 class DonationBase(CharityBase):
     """Base donation pydantic schema"""
@@ -24,7 +27,7 @@ class DonationCreate(DonationBase):
                     'description': 'Одиночная фамилия передается строкой',
                     'value': {
                         'comment': 'Happy to help!',
-                        'full_amount': 1000,
+                        'full_amount': VALID_FULL_AMOUNT_EXAMPLE,
                     }
                 },
                 'invalid_full_amount': {
@@ -32,7 +35,7 @@ class DonationCreate(DonationBase):
                     'description': 'Full amount must be grater then 0',
                     'value': {
                         'comment': 'Happy to help!',
-                        'full_amount': 0,
+                        'full_amount': INVALID_FULL_AMOUNT_EXAMPLE,
                     }
                 },
             }

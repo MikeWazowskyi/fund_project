@@ -4,14 +4,19 @@ from pydantic import Field, validator
 
 from .base import CharityBase
 
+MINIMUM_NAME_LENGTH = 1
+MAXIMUM_NAME_LENGTH = 100
+VALID_FULL_AMOUNT_EXAMPLE = 1000000000000
+INVALID_FULL_AMOUNT_EXAMPLE = 0
+
 
 class CharityProjectBase(CharityBase):
     """Base charity project pydantic schema"""
 
     name: Optional[str] = Field(
         None,
-        min_length=1,
-        max_length=100,
+        min_length=MINIMUM_NAME_LENGTH,
+        max_length=MAXIMUM_NAME_LENGTH,
         title='Project name'
     )
     description: Optional[str]
@@ -41,8 +46,8 @@ class CharityProjectCreate(CharityProjectUpdate):
 
     name: str = Field(
         ...,
-        min_length=1,
-        max_length=100,
+        min_length=MINIMUM_NAME_LENGTH,
+        max_length=MAXIMUM_NAME_LENGTH,
         title='Project name'
     )
     description: str
@@ -58,7 +63,7 @@ class CharityProjectCreate(CharityProjectUpdate):
                         'name': 'Food for all!',
                         'description': 'Collect funds to feed all cats '
                                        'in the world!',
-                        'full_amount': 1000000000000,
+                        'full_amount': VALID_FULL_AMOUNT_EXAMPLE,
                     }
                 },
                 'invalid_full_amount': {
@@ -68,7 +73,7 @@ class CharityProjectCreate(CharityProjectUpdate):
                         'name': 'Food for all!',
                         'description': 'Collect funds to feed all cats '
                                        'in the world!',
-                        'full_amount': 0,
+                        'full_amount': INVALID_FULL_AMOUNT_EXAMPLE,
                     }
                 },
                 'invalid_description': {
@@ -77,7 +82,7 @@ class CharityProjectCreate(CharityProjectUpdate):
                     'value': {
                         'name': 'Food for all!',
                         'description': '',
-                        'full_amount': 1000000000000,
+                        'full_amount': VALID_FULL_AMOUNT_EXAMPLE,
                     }
                 },
                 'invalid_name': {
@@ -87,7 +92,7 @@ class CharityProjectCreate(CharityProjectUpdate):
                         'name': '',
                         'description': 'Collect funds to feed all cats '
                                        'in the world!',
-                        'full_amount': 1000000000000,
+                        'full_amount': INVALID_FULL_AMOUNT_EXAMPLE,
                     }
                 }
             }
