@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from fastapi import APIRouter, HTTPException
 
 from app.core.user import auth_backend, fastapi_users
@@ -32,6 +34,6 @@ router.include_router(
 async def delete_user(id: str):
     """Don't use, deactivate users"""
     raise HTTPException(
-        status_code=405,
+        status_code=HTTPStatus.METHOD_NOT_ALLOWED,
         detail='User deletion if forbidden'
     )
