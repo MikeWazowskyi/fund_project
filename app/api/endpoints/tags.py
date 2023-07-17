@@ -9,4 +9,3 @@ class Tag(str, Enum):
     RETRIEVE: str = 'Retrieve'
     UNAUTHORIZED: str = 'Unauthorized'
     UPDATE: str = 'Update'
-
