@@ -60,7 +60,7 @@ async def create_new_donation(
         available_projects = await charity_project_crud.get_not_invested(
             session
         )
-        invested_charity_project, invested_donations = invest(
+        invested_donation, invested_charity_projects = invest(
             new_donation,
             available_projects
         )
@@ -72,7 +72,7 @@ async def create_new_donation(
         )
     else:
         await session.commit()
-        await session.refresh(invested_charity_project)
+        await session.refresh(invested_donation)
         return new_donation
 
 
