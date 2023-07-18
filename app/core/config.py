@@ -4,8 +4,8 @@ from pydantic import BaseSettings, EmailStr
 
 
 class Settings(BaseSettings):
-    app_title: str = 'Кошачий благотворительный фонд'
-    description: str = 'API-сервис для кошачьего благотворительного фонда'
+    app_title: str = 'Charity fund'
+    description: str = 'Charity fun API-service'
     database_url: str = 'sqlite+aiosqlite:///./charity_fund.db'
     secret: str = 'SECRET_KEY'
     first_superuser_email: Optional[EmailStr] = None
