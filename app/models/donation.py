@@ -9,7 +9,3 @@ class Donation(CharityBase):
     user_id = Column(Integer, ForeignKey('user.id'))
     comment = Column(Text)
 
-    def __repr__(self):
-        return (f'<user_id: {self.user_id}, '
-                f'created: {self.create_date},'
-                f'full_amount: {self.full_amount}>')
