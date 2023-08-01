@@ -15,7 +15,7 @@ def invest(
         amount_to_invest = min(free_to_invest, left_to_invest)
         if amount_to_invest == 0:
             break
-        for participant in sources, target:
+        for participant in source, target:
             participant.close_if_invested(amount_to_invest)
         invested.append(source)
     return target, invested
