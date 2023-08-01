@@ -27,6 +27,5 @@ class CharityBase(Base):
             self.close_date = datetime.now()
 
     def __repr__(self):
-        return (f'<name: {self.name}, '
-                f'created: {self.create_date},'
+        return (f'created: {self.create_date},'
                 f'full_amount: {self.full_amount}>')
