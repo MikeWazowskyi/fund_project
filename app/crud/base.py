@@ -96,10 +96,3 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             ).order_by(self.model.create_date)
         )
         return not_invested_objs.scalars().all()
-
-    @staticmethod
-    def close_if_invested(obj: ModelType, amount_to_invest: int):
-        obj.invested_amount += amount_to_invest
-        if obj.full_amount == obj.invested_amount:
-            obj.fully_invested = True
-            obj.close_date = datetime.now()
