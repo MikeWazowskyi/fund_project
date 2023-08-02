@@ -1,5 +1,5 @@
 # Charity Fund
-[![FastAPI CI](https://github.com/MikeWazowskyi/fund_project/actions/workflows/fastapi_ci.yml/badge.svg)](https://github.com/MikeWazowskyi/fund_project/actions/workflows/fastapi_ci.yml)
+[![FastAPI CI](https://github.com/MikeWazowskyi/fund_project/actions/workflows/main.yml/badge.svg)](https://github.com/MikeWazowskyi/fund_project/actions/workflows/main.yml)
 
 ## Описание
 
