@@ -1,5 +1,5 @@
 # Charity Fund
-[![python-app workflow](https://github.com/MikeWazowskyi/fund_project/actions/workflows/quality_assurance.yml/badge.svg)](https://github.com/MikeWazowskyi/fund_project/actions/workflows/quality_assurance.yml)
+[![FastAPI CI](https://github.com/MikeWazowskyi/fund_project/actions/workflows/fastapi_ci.yml/badge.svg)](https://github.com/MikeWazowskyi/fund_project/actions/workflows/fastapi_ci.yml)
 
 ## Описание
 
