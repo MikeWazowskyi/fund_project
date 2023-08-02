@@ -44,7 +44,7 @@ cd cat_charity_fund
 
 ## Examples of API requets:
 
-## Create new charity project
+### Charity project's endpoints
 
 ### POST /charity_project/
 
@@ -153,7 +153,7 @@ Response:
 ]
 ```
 
-## Create new donations
+### Donation's endpoints
 
 ### POST /charity_project/
 
