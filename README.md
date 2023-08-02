@@ -1,13 +1,13 @@
 # Charity Fund
 [![FastAPI CI](https://github.com/MikeWazowskyi/fund_project/actions/workflows/main.yml/badge.svg)](https://github.com/MikeWazowskyi/fund_project/actions/workflows/main.yml)
 
-## Описание
+## Description
 
-Charity Fund - API-сервис для сбора средств на благотворительность
+Charity Fund - API-service to collect funds on charity projects.
 
-## Установка
+## Installation
 
-Клонировать репозиторий и перейти в него в командной строке:
+1. Clone repository:
 
 ```
 git clone git@github.com:MikeWazowskyi/cat_charity_fund.git
@@ -17,18 +17,18 @@ git clone git@github.com:MikeWazowskyi/cat_charity_fund.git
 cd cat_charity_fund
 ```
 
-Настроить файл .env про примеру файла .env_example:
+2. Create .env file using .env_example:
 
 ```
 .env_example
 ```
-* В контейнере Docker + GNU make:
+* In Docker container + GNU make:
 
     ```
     make start
     ```
 
-* Если у вас Linux/macOS
+* Linux/macOS
 
     ```
     chmod +x run.sh
@@ -36,15 +36,15 @@ cd cat_charity_fund
     ./run.sh
     ```
 
-* Если у вас windows
+* Windows OS
 
     ```
     run.bat
     ```
 
-## Примеры запросов к REST API:
+## Examples of API requets:
 
-## Создание новых благотворительных проектов
+## Create new charity project
 
 ### POST /charity_project/
 
@@ -153,7 +153,7 @@ Response:
 ]
 ```
 
-## Создание новых пожертвований
+## Create new donations
 
 ### POST /charity_project/
 
@@ -220,13 +220,13 @@ Response:
 ]
 ```
 
-### Адрес полной документации к API:
+### API documentation address:
 
 ```
 http://<host>/docs
 ```
 
 
-## Об авторе:
+## About author:
 
 https://github.com/MikeWazowskyi
