@@ -223,10 +223,10 @@ Response:
 ### API documentation address:
 
 ```
-http://<host>/docs
+http://<host>:<port>/docs
 ```
 
 
-## About author:
+## About Author:
 
 https://github.com/MikeWazowskyi
